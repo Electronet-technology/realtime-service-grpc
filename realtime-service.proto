@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package realtime;
+
+// Realtime service def
+service RealtimeService {
+    //Remote Procedure Calls
+    /*
+        GetLatestStreaming
+        returns latest values, and future values for provided namespace
+    */
+    rpc GetLatestStreaming (RouteRequest) returns (stream RouteResponse) {}
+    /*
+        GetLatest
+        returns latest values for provided namespace
+    */
+    rpc GetLatest (RouteRequest) returns (stream RouteResponse) {}
+}
+  
+message RouteRequest {
+    string route = 1; //use routes documented on the realtime-service's /routes page.
+}
+  
+  // A response message containing a greeting
+message RouteResponse {
+    string json = 1;
+    bool fromCache = 2; //true if data is from cache, false if data is a new row
+}
